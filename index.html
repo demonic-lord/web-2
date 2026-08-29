@@ -85,7 +85,7 @@
         <h1>System Lockout Terminal</h1>
         <p>Security protocols engaged. Automated database sync active.</p>
         
-        <!-- Input fields added for the SQLi simulation -->
+        <!-- Input fields for the SQLi simulation -->
         <div class="input-group">
             <label for="username">Database Username</label>
             <input type="text" id="username" placeholder="e.g., admin">
@@ -122,7 +122,7 @@
         });
 
         /* =======================================================
-           2. BACKEND EMULATION & SQL INJECTION SANITIZATION
+           2. BACKEND EMULATION & SQL INJECTION EVALUATION
            ======================================================= */
         function updateDisplay(text, color) {
             const el = document.getElementById('status-display');
@@ -139,11 +139,7 @@
                 return;
             }
 
-            // Simulated Backend Raw SQL Structure: 
-            // SELECT * FROM users WHERE username = 'USER_INPUT' AND password = 'PASSWORD_INPUT';
-            
-            // Simple SQL Injection tautology check validation logic
-            // Looks for character breaks: ' OR '1'='1 or ' OR 1=1 --
+            // Simple SQL Injection verification regex patterns
             const sqliPattern1 = /'\s*or\s*['"]?1['"]?\s*=\s*['"]?1/i;
             const sqliPattern2 = /'\s*or\s*1\s*=\s*1/i;
             const sqliPattern3 = /'--/i;
@@ -152,7 +148,6 @@
                             sqliPattern1.test(passInp) || sqliPattern2.test(passInp) || sqliPattern3.test(passInp);
 
             if (isSQLi) {
-                // Base64 
                
                 const securePayload = atob("QWNjZXNzIEdyYW50ZWQuIEZsYWc6IEt8NEszTnt3M2JfYnlwNHNzX3dpdGhfc3FsaX0=");
                 updateDisplay(securePayload, "#4ade80");
