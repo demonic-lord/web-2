@@ -27,6 +27,32 @@
         }
         h1 { color: #f43f5e; font-size: 24px; margin-bottom: 10px; }
         p { color: #94a3b8; font-size: 14px; margin-bottom: 25px; }
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #f43f5e;
+        }
         button {
             background-color: #f43f5e;
             color: white;
@@ -38,6 +64,7 @@
             width: 100%;
             font-weight: bold;
             transition: background 0.2s;
+            margin-top: 10px;
         }
         button:hover { background-color: #e11d48; }
         #status-display {
@@ -48,6 +75,7 @@
             border-radius: 6px;
             background-color: #0f172a;
             border: 1px solid #1e293b;
+            word-break: break-all;
         }
     </style>
 </head>
@@ -55,12 +83,19 @@
 
     <div class="container">
         <h1>System Lockout Terminal</h1>
-        <p>Security protocols engaged. Automated debug defense is active.</p>
+        <p>Security protocols engaged. Automated database sync active.</p>
         
-        <!-- Target Parameter for Players to Exploit -->
-        <div id="security-perimeter" systemAccess="restricted">
-            <button onclick="evaluateAccessTelemetry()">Request Administrator Core Flag</button>
+        <!-- Input fields added for the SQLi simulation -->
+        <div class="input-group">
+            <label for="username">Database Username</label>
+            <input type="text" id="username" placeholder="e.g., admin">
         </div>
+        <div class="input-group">
+            <label for="password">Security Password</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+
+        <button onclick="evaluateAccessTelemetry()">Request Administrator Core Flag</button>
 
         <div id="status-display" style="color: #94a3b8;">System Listening...</div>
     </div>
@@ -87,7 +122,7 @@
         });
 
         /* =======================================================
-
+           2. BACKEND EMULATION & SQL INJECTION SANITIZATION
            ======================================================= */
         function updateDisplay(text, color) {
             const el = document.getElementById('status-display');
@@ -96,15 +131,35 @@
         }
 
         function evaluateAccessTelemetry() {
-            const node = document.getElementById('security-perimeter');
-            const privilegeLevel = node.getAttribute('systemAccess');
+            const userInp = document.getElementById('username').value.trim();
+            const passInp = document.getElementById('password').value.trim();
 
-            if (privilegeLevel === "root_admin") {
-                // Pre-computed SHA-256 hash validation string
-                // Plaintext flag is completely absent from code
-                updateDisplay("QWNjZXNzIEdyYW50ZWQuIEZsYWc6IEt8NEszTnt3M2JfYnlwNHNzX3dpdGhfc3FsaX0=", "#4ade80");
+            if (!userInp || !passInp) {
+                updateDisplay("Error: Database input query fields cannot be null.", "#f43f5e");
+                return;
+            }
+
+            // Simulated Backend Raw SQL Structure: 
+            // SELECT * FROM users WHERE username = 'USER_INPUT' AND password = 'PASSWORD_INPUT';
+            
+            // Simple SQL Injection tautology check validation logic
+            // Looks for character breaks: ' OR '1'='1 or ' OR 1=1 --
+            const sqliPattern1 = /'\s*or\s*['"]?1['"]?\s*=\s*['"]?1/i;
+            const sqliPattern2 = /'\s*or\s*1\s*=\s*1/i;
+            const sqliPattern3 = /'--/i;
+
+            const isSQLi = sqliPattern1.test(userInp) || sqliPattern2.test(userInp) || sqliPattern3.test(userInp) ||
+                            sqliPattern1.test(passInp) || sqliPattern2.test(passInp) || sqliPattern3.test(passInp);
+
+            if (isSQLi) {
+                // Base64 
+               
+                const securePayload = atob("QWNjZXNzIEdyYW50ZWQuIEZsYWc6IEt8NEszTnt3M2JfYnlwNHNzX3dpdGhfc3FsaX0=");
+                updateDisplay(securePayload, "#4ade80");
             } else {
-                updateDisplay("QWNjZXNzIERlbmllZDogUGFyYW1ldGVyICdzeXN0ZW1BY2Nlc3MnIGV2YWx1YXRlZCBhcyByZXN0cmljdGVkLg==", "#f43f5e");
+                
+                const errorPayload = atob("QWNjZXNzIERlbmllZDogRGF0YWJhc2UgcXVlcnkgcmV0dXJuZWQgMCByb3dzIG1hdGNoaW5nIGNyaXRlcmlhLg==");
+                updateDisplay(errorPayload, "#f43f5e");
             }
         }
     </script>
