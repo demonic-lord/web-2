@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K|R4K3N Protected Console</title>
+    <title>K|R4K3N Enterprise Core — Central Authentication Service</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #0f172a;
-            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b0f19;
+            color: #f1f5f9;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,99 +16,121 @@
             margin: 0;
             user-select: none;
         }
-        .container {
-            background-color: #1e293b;
+        .login-wrapper {
+            background-color: #111827;
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
-            text-align: center;
-            width: 400px;
-            border: 1px solid #334155;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+            width: 380px;
+            border: 1px solid #1f2937;
         }
-        h1 { color: #f43f5e; font-size: 24px; margin-bottom: 10px; }
-        p { color: #94a3b8; font-size: 14px; margin-bottom: 25px; }
-        .input-group {
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo-placeholder {
+            font-size: 28px;
+            font-weight: 800;
+            color: #f43f5e;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .system-status {
+            font-size: 13px;
+            color: #9ca3af;
+            margin: 0;
+        }
+        .form-group {
+            margin-bottom: 20px;
             text-align: left;
-            margin-bottom: 15px;
         }
         label {
             display: block;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
-            color: #94a3b8;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
+            color: #9ca3af;
+            margin-bottom: 6px;
+            letter-spacing: 0.05em;
+            font-weight: 6px;
         }
         input {
             width: 100%;
-            padding: 10px;
-            background-color: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 6px;
-            color: #fff;
+            padding: 12px 16px;
+            background-color: #030712;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            color: #ffffff;
             font-size: 14px;
             box-sizing: border-box;
+            transition: all 0.2s;
         }
         input:focus {
             outline: none;
             border-color: #f43f5e;
+            box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.2);
         }
-        button {
+        .btn-submit {
             background-color: #f43f5e;
-            color: white;
+            color: #ffffff;
             border: none;
-            padding: 14px 24px;
-            font-size: 16px;
-            border-radius: 6px;
+            padding: 14px;
+            font-size: 15px;
+            border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            font-weight: bold;
+            font-weight: 600;
             transition: background 0.2s;
             margin-top: 10px;
+            box-shadow: 0 4px 6px -1px rgba(244, 63, 94, 0.2);
         }
-        button:hover { background-color: #e11d48; }
-        #status-display {
+        .btn-submit:hover {
+            background-color: #e11d48;
+        }
+        #alert-box {
             margin-top: 25px;
-            font-family: monospace;
-            font-size: 14px;
-            padding: 12px;
-            border-radius: 6px;
-            background-color: #0f172a;
-            border: 1px solid #1e293b;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            padding: 14px;
+            border-radius: 8px;
+            background-color: #030712;
+            border: 1px solid #1f2937;
             word-break: break-all;
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>System Lockout Terminal</h1>
-        <p>Security protocols engaged. Automated database sync active.</p>
+    <div class="login-wrapper">
+        <div class="header-section">
+            <div class="logo-placeholder">K|R4K3N</div>
+            <p class="system-status">🔒 Automated Anti-Debugging Active & Syncing</p>
+        </div>
         
-        <!-- Input fields for the SQLi simulation -->
-        <div class="input-group">
-            <label for="username">Database Username</label>
-            <input type="text" id="username" placeholder="e.g., admin">
+        <!-- Interactive Mock Login Node System -->
+        <div class="form-group">
+            <label for="uid">Account Username</label>
+            <input type="text" id="uid" placeholder="Enter security handle..." autocomplete="off">
         </div>
-        <div class="input-group">
-            <label for="password">Security Password</label>
-            <input type="password" id="password" placeholder="••••••••">
+        <div class="form-group">
+            <label for="pwd">Account Password</label>
+            <input type="password" id="pwd" placeholder="••••••••" autocomplete="off">
         </div>
 
-        <button onclick="evaluateAccessTelemetry()">Request Administrator Core Flag</button>
+        <button class="btn-submit" onclick="processAuthentication()">Sign In to Cluster</button>
 
-        <div id="status-display" style="color: #94a3b8;">System Listening...</div>
+        <div id="alert-box"></div>
     </div>
 
     <script>
         /* =======================================================
-           1. AGGRESSIVE CLIENT-SIDE ANTI-DEBUGGING PROTOCOLS
+           1. HARDENED INTERACTION LOGS (ANTI-DEBUGGING SYSTEM)
            ======================================================= */
         
-        // Block right-clicks entirely
+        // Prevent all traditional right click actions on layout asset nodes
         document.addEventListener('contextmenu', event => event.preventDefault());
 
-        // Block structural shortcuts and functional inspection keys
+        // intercept structural functional keystrokes to deny source parsing
         document.addEventListener('keydown', function(e) {
             if (
                 e.key === "F12" || 
@@ -116,45 +138,48 @@
                 (e.ctrlKey && e.key === "U")
             ) {
                 e.preventDefault();
-                updateDisplay("Security Violation: Inspection key stroke blocked.", "#f43f5e");
+                triggerAlert("Security Incident Detected: Terminal structural extraction block logged.", "#f43f5e");
                 return false;
             }
         });
 
         /* =======================================================
-           2. BACKEND EMULATION & SQL INJECTION EVALUATION
+           2. CLIENT-SIDE MOCK SQL INJECTION ENGINE
            ======================================================= */
-        function updateDisplay(text, color) {
-            const el = document.getElementById('status-display');
-            el.textContent = text;
-            el.style.color = color;
+        function triggerAlert(messageText, fontColor) {
+            const containerNode = document.getElementById('alert-box');
+            containerNode.style.display = "block";
+            containerNode.textContent = messageText;
+            containerNode.style.color = fontColor;
+            containerNode.style.borderColor = fontColor === "#4ade80" ? "#065f46" : "#991b1b";
         }
 
-        function evaluateAccessTelemetry() {
-            const userInp = document.getElementById('username').value.trim();
-            const passInp = document.getElementById('password').value.trim();
+        function processAuthentication() {
+            const userFieldValue = document.getElementById('uid').value.trim();
+            const passFieldValue = document.getElementById('pwd').value.trim();
 
-            if (!userInp || !passInp) {
-                updateDisplay("Error: Database input query fields cannot be null.", "#f43f5e");
+            if (!userFieldValue || !passFieldValue) {
+                triggerAlert("System Core Alert: Active validation inputs cannot be left blank.", "#f43f5e");
                 return;
             }
 
-            // Simple SQL Injection verification regex patterns
-            const sqliPattern1 = /'\s*or\s*['"]?1['"]?\s*=\s*['"]?1/i;
-            const sqliPattern2 = /'\s*or\s*1\s*=\s*1/i;
-            const sqliPattern3 = /'--/i;
+            // Client side filter validation mimicking structural SQL flaws
+            const rawInjectionFilter1 = /'\s*or\s*['"]?1['"]?\s*=\s*['"]?1/i;
+            const rawInjectionFilter2 = /'\s*or\s*1\s*=\s*1/i;
+            const rawInjectionFilter3 = /'--/i;
 
-            const isSQLi = sqliPattern1.test(userInp) || sqliPattern2.test(userInp) || sqliPattern3.test(userInp) ||
-                            sqliPattern1.test(passInp) || sqliPattern2.test(passInp) || sqliPattern3.test(passInp);
+            const isExploited = rawInjectionFilter1.test(userFieldValue) || rawInjectionFilter2.test(userFieldValue) || rawInjectionFilter3.test(userFieldValue) ||
+                                rawInjectionFilter1.test(passFieldValue) || rawInjectionFilter2.test(passFieldValue) || rawInjectionFilter3.test(passFieldValue);
 
-            if (isSQLi) {
-               
-                const securePayload = atob("QWNjZXNzIEdyYW50ZWQuIEZsYWc6IEt8NEszTnt3M2JfYnlwNHNzX3dpdGhfc3FsaX0=");
-                updateDisplay(securePayload, "#4ade80");
+            if (isExploited) {
+                // Decodes completely inside browser layout upon validation confirmation
+                // Original: "Access Granted. Flag: K|4K3N{w3b_byp4ss_with_sqli}"
+                const keyTokenString = atob("QWNjZXNzIEdyYW50ZWQuIEZsYWc6IEt8NEszTnt3M2JfYnlwNHNzX3dpdGhfc3FsaX0=");
+                triggerAlert(keyTokenString, "#4ade80");
             } else {
-                
-                const errorPayload = atob("QWNjZXNzIERlbmllZDogRGF0YWJhc2UgcXVlcnkgcmV0dXJuZWQgMCByb3dzIG1hdGNoaW5nIGNyaXRlcmlhLg==");
-                updateDisplay(errorPayload, "#f43f5e");
+                // Original: "Access Denied: Invalid database record match for supplied credentials."
+                const invalidLoginString = atob("QWNjZXNzIERlbmllZDogSW52YWxpZCBkYXRhYmFzZSByZWNvcmQgbWF0Y2ggZm9yIHN1cHBsaWVkIGNyZWRlbnRpYWxzLg==");
+                triggerAlert(invalidLoginString, "#f43f5e");
             }
         }
     </script>
