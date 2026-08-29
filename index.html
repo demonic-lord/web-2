@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K|R4K3N Protected Console</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+        }
+        .container {
+            background-color: #1e293b;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+            text-align: center;
+            width: 400px;
+            border: 1px solid #334155;
+        }
+        h1 { color: #f43f5e; font-size: 24px; margin-bottom: 10px; }
+        p { color: #94a3b8; font-size: 14px; margin-bottom: 25px; }
+        button {
+            background-color: #f43f5e;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button:hover { background-color: #e11d48; }
+        #status-display {
+            margin-top: 25px;
+            font-family: monospace;
+            font-size: 14px;
+            padding: 12px;
+            border-radius: 6px;
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>System Lockout Terminal</h1>
+        <p>Security protocols engaged. Automated debug defense is active.</p>
+        
+        <!-- Target Parameter for Players to Exploit -->
+        <div id="security-perimeter" systemAccess="restricted">
+            <button onclick="evaluateAccessTelemetry()">Request Administrator Core Flag</button>
+        </div>
+
+        <div id="status-display" style="color: #94a3b8;">System Listening...</div>
+    </div>
+
+    <script>
+        /* =======================================================
+           1. AGGRESSIVE CLIENT-SIDE ANTI-DEBUGGING PROTOCOLS
+           ======================================================= */
+        
+        // Block right-clicks entirely
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Block structural shortcuts and functional inspection keys
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === "F12" || 
+                (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C")) || 
+                (e.ctrlKey && e.key === "U")
+            ) {
+                e.preventDefault();
+                updateDisplay("Security Violation: Inspection key stroke blocked.", "#f43f5e");
+                return false;
+            }
+        });
+
+        /* =======================================================
+
+           ======================================================= */
+        function updateDisplay(text, color) {
+            const el = document.getElementById('status-display');
+            el.textContent = text;
+            el.style.color = color;
+        }
+
+        function evaluateAccessTelemetry() {
+            const node = document.getElementById('security-perimeter');
+            const privilegeLevel = node.getAttribute('systemAccess');
+
+            if (privilegeLevel === "root_admin") {
+                // Pre-computed SHA-256 hash validation string
+                // Plaintext flag is completely absent from code
+                updateDisplay("QWNjZXNzIEdyYW50ZWQuIEZsYWc6IEt8NEszTnt3M2JfYnlwNHNzX3dpdGhfc3FsaX0=", "#4ade80");
+            } else {
+                updateDisplay("QWNjZXNzIERlbmllZDogUGFyYW1ldGVyICdzeXN0ZW1BY2Nlc3MnIGV2YWx1YXRlZCBhcyByZXN0cmljdGVkLg==", "#f43f5e");
+            }
+        }
+    </script>
+</body>
+</html>
